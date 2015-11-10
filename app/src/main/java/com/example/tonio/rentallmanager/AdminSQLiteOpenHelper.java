@@ -22,9 +22,8 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TABLE_CABANAS = "CREATE TABLE " + Cabana.TABLE
-                +"("
-                + Cabana.KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + Cabana.KEY_name + "TEXT)";
+                + Cabana.KEY_ID + " integer primary key autoincrement,"
+                + Cabana.KEY_name + " text";
         db.execSQL(CREATE_TABLE_CABANAS);
 
         String CREATE_TABLE_ALQUILADAS = "CREATE TABLE " + Alquiladas.TABLE

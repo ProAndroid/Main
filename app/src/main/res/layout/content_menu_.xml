@@ -38,5 +38,6 @@
         android:background="@drawable/m"
         android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/imageView"
-        android:layout_alignStart="@+id/imageView" />
+        android:layout_alignStart="@+id/imageView"
+        android:onClick="cargarCabana" />
 </RelativeLayout>

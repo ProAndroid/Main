@@ -10,7 +10,7 @@ public class Cabana {
     public final static String TABLE = "cabanas";
     //Set de los Keys para la base de datos
     public static final String KEY_ID = "id";
-    public static final String KEY_name = "nombre";
+    public static final String KEY_name = "name";
 
     public int cabaña_ID;
     public String name;
