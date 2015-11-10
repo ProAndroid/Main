@@ -19,7 +19,7 @@ public class Cargar extends AppCompatActivity {
     }
 
     public void cargar(View view){
-        
+
     }
 
 }
