@@ -30,6 +30,11 @@ public class Menu_Activity extends AppCompatActivity {
         Intent i = new Intent(this, ScrollingActivity.class );
         startActivity(i);
     }
-
+    public void cargarCabana(View view) {
+        Intent i = new Intent(this, Cargar.class);
+        System.out.println("Estoy aca1");
+        startActivity(i);
+        System.out.println("Estoy aca2");
+    }
 
 }
