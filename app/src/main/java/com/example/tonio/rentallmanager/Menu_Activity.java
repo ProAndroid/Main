@@ -32,9 +32,12 @@ public class Menu_Activity extends AppCompatActivity {
     }
     public void cargarCabana(View view) {
         Intent i = new Intent(this, Cargar.class);
-        System.out.println("Estoy aca1");
         startActivity(i);
-        System.out.println("Estoy aca2");
+    }
+
+    public void alquilarCabana(View view){
+        Intent i = new Intent(this, Alquilar.class);
+        startActivity(i);
     }
 
 }

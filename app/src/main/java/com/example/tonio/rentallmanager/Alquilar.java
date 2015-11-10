@@ -165,17 +165,12 @@ public class Alquilar extends AppCompatActivity {
         SQLiteDatabase dbc = adminc.getWritableDatabase();
         SQLiteDatabase dba = admina.getWritableDatabase();
         SQLiteDatabase dbp = adminp.getWritableDatabase();
-
-        ContentValues foo = new ContentValues();
-        foo.put("nombre", "hola");
-        dbc.insert("cabanas", null, foo);
-
         //Get a las variables para poder guardarlas.
         String name = nombre.getText().toString() + apellido.getText().toString() ;
         String mail = email.getText().toString();
         int dni = Integer.parseInt(etDni.getText().toString());
-        String nombreCabana = "hola";   //spinner1.getSelectedItem().toString();
-        Cursor fil = dbc.rawQuery("select * from cabanas where nombre like '" + nombreCabana + "'", null);
+        String search = spinner1.getSelectedItem().toString();
+        Cursor fil = dbc.rawQuery("select * from cabanas where nombre like '" + search + "'", null);
         fil.moveToFirst();
         String id = fil.getString(0);
         int aux_id = Integer.parseInt(id);
