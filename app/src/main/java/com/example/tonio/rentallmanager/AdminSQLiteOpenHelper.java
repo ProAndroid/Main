@@ -22,8 +22,9 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TABLE_CABANAS = "CREATE TABLE " + Cabana.TABLE
+                + "("
                 + Cabana.KEY_ID + " integer primary key autoincrement,"
-                + Cabana.KEY_name + " text";
+                + Cabana.KEY_name + " text" + ")";
         db.execSQL(CREATE_TABLE_CABANAS);
 
         String CREATE_TABLE_ALQUILADAS = "CREATE TABLE " + Alquiladas.TABLE
@@ -40,7 +41,8 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
                 +Persona.kEY_dni+"INTEGER PRIMARY KEY,"
                 +Persona.KEY_ID+ "INTEGER,"
                 +Persona.KEY_nombre+"TEXT,"
-                +Persona.KEY_email+"TEXT)";
+                +Persona.KEY_email+"TEXT"
+                +")";
         db.execSQL(CREATE_TABLE_PERSONA);
     }
 
