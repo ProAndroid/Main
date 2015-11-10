@@ -3,8 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:fitsSystemWindows="true"
-    tools:context=".ScrollingActivity">
+    android:layout_height="match_parent" android:fitsSystemWindows="false"
+    tools:context=".ScrollingActivity"
+    android:focusableInTouchMode="false">
 
     <android.support.design.widget.AppBarLayout android:id="@+id/app_bar"
         android:fitsSystemWindows="true" android:layout_height="@dimen/app_bar_height"
@@ -35,15 +36,6 @@
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
         android:src="@android:drawable/ic_menu_edit"
-        app:backgroundTint="@color/md_yellow_700" />
-
-    <android.support.design.widget.FloatingActionButton android:id="@+id/feb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end"
-        android:src="@android:drawable/ic_dialog_email"
         app:backgroundTint="@color/md_yellow_700" />
 
 </android.support.design.widget.CoordinatorLayout>
