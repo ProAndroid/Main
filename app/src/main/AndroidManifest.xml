@@ -9,21 +9,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".ScrollingActivity"
+            android:name=".Menu_Activity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
+
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.action.DEFAULT" />
+
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".Menu_Activity"
-            android:label="@string/title_activity_cab_"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+    </activity>
+
+    <activity
+        android:name=".ScrollingActivity"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme.NoActionBar" >
+    </activity>
     </application>
 
 </manifest>

@@ -18,7 +18,8 @@
         android:layout_marginTop="41dp"
         android:layout_below="@+id/imageView3"
         android:layout_alignLeft="@+id/imageView2"
-        android:layout_alignStart="@+id/imageView2" />
+        android:layout_alignStart="@+id/imageView2"
+        android:onClick="lanzar" />
 
     <ImageView
         android:layout_width="wrap_content"
