@@ -23,15 +23,17 @@ public class Cargar extends AppCompatActivity {
     }
 
     public void cargar(View view){
-        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,"cabanas");
-        SQLiteDatabase db = admin.getWritableDatabase();
-        ContentValues guardar = new ContentValues();
-        String nom = editText.getText().toString();
-        guardar.put("name", nom);
-        db.insert("cabanas", null, guardar);
-        editText.setText("");
-        Toast.makeText(this,"Cargado correctamente", Toast.LENGTH_LONG).show();
-        db.close();
-    }
+        if(!(editText.getText().toString().matches(""))){
+            AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,"cabanas");
+            SQLiteDatabase db = admin.getWritableDatabase();
+            ContentValues guardar = new ContentValues();
+            String nom = editText.getText().toString();
+            guardar.put("name", nom);
+            db.insert("cabanas", null, guardar);
+            editText.setText("");
+            Toast.makeText(this,"Cargado correctamente", Toast.LENGTH_LONG).show();
+            db.close();
+    }else{
+            Toast.makeText(this, "Falta completar", Toast.LENGTH_LONG).show();
 
-}
+}}}

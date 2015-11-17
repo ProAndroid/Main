@@ -27,7 +27,7 @@ public class Menu_Activity extends AppCompatActivity {
         });
     }
     public void lanzar(View view) {
-        Intent i = new Intent(this, ScrollingActivity.class );
+        Intent i = new Intent(this, listaCabanias.class );
         startActivity(i);
     }
     public void cargarCabana(View view) {
