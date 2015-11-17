@@ -2,6 +2,7 @@ package com.example.tonio.rentallmanager;
 
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -131,12 +132,13 @@ public class Alquilar extends AppCompatActivity {
         SQLiteDatabase dbc = adminc.getWritableDatabase();
         SQLiteDatabase dba = admina.getWritableDatabase();
         List<String> labels = new ArrayList<>();
+        List<Integer> ids = new ArrayList<>();
         spinner1 = (Spinner) findViewById(R.id.spinner);
         Cursor fila = dba.rawQuery("select * from Alquiladas", null);
         if (fila.moveToFirst()){ //si tiene algo en la tabla que ponga el cursor en la posicion 0
             do{
                 System.out.println("Antes de pedir todo de cabañas con la id");
-                Cursor filaT = dbc.rawQuery("select * from cabanas where id="+fila.getInt(0), null);
+                Cursor filaT = dbc.rawQuery("select * from cabanas where idc="+fila.getInt(0), null);
                 if (filaT.moveToFirst()){
                     System.out.println("filaT tiene algo y esta en posicion 0");
                     do {
@@ -160,7 +162,14 @@ public class Alquilar extends AppCompatActivity {
         dataAdapter
                 .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner1.setAdapter(dataAdapter);
-        System.out.println("Esto es labels ---->  "+labels.toString());
+        System.out.println("Esto es labels ---->  " + labels.toString());
+
+        if (fila.moveToFirst()){
+            do {
+                ids.add(fila.getInt(0));
+            }while (fila.moveToNext());
+        }
+        System.out.println("Esto tiene alquiladas ---> "+ids.toString());
     }
 
 
@@ -177,21 +186,31 @@ public class Alquilar extends AppCompatActivity {
         String mail = email.getText().toString();
         int dni = Integer.parseInt(etDni.getText().toString());
         String search = spinner1.getSelectedItem().toString();
-        Cursor fil = dbc.rawQuery("select * from cabanas where nombre like '" + search + "'", null);
+        Cursor fil = dbc.rawQuery("select idc from cabanas where name like '" + search + "'", null);
         fil.moveToFirst();
         String id = fil.getString(0);
         int aux_id = Integer.parseInt(id);
+
+
+
+        // todo me dice que no tengo la columna
         ContentValues toAlquilada = new ContentValues();
-        toAlquilada.put(Cabana.KEY_ID,aux_id);
-        toAlquilada.put(Alquiladas.KEY_checkin,llegada.getText().toString());
-        toAlquilada.put(Alquiladas.KEY_checkout, salida.getText().toString());
+        toAlquilada.put("id", aux_id);
+        toAlquilada.put("checkin", llegada.getText().toString());
+        toAlquilada.put("checkout", salida.getText().toString());
+
+        System.out.println("Esto tiene toAlquilada --->  " + toAlquilada.toString());
+
         ContentValues toPersona = new ContentValues();
-        toPersona.put(Cabana.KEY_ID,aux_id);
-        toPersona.put(Persona.kEY_dni,dni);
-        toPersona.put(Persona.KEY_nombre,name);
-        toPersona.put(Persona.KEY_email, mail);
-        dba.insert("Alquiladas", null, toAlquilada);
+        toPersona.put("id", aux_id);
+        toPersona.put("dni", dni);
+        toPersona.put("nombre", name);
+        toPersona.put("email", mail);
         dbp.insert("Persona", null, toPersona);
+        System.out.println("Esto tiene toPersona ---> " + toPersona.toString());
+
+        dba.insert("Alquiladas", null, toAlquilada);
+
         dba.close();
         dbc.close();
         dbp.close();
