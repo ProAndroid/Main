@@ -125,9 +125,8 @@ public class Alquilar extends AppCompatActivity {
 
 
         });
-
-        // todo no carga los datos en el spinner
-        AdminSQLiteOpenHelper adminc = new AdminSQLiteOpenHelper(this,"cabana");
+        // todo comparar fechas si la ingresada es antes o despues de la que esta alquilada la cabaña
+        AdminSQLiteOpenHelper adminc = new AdminSQLiteOpenHelper(this,"cabanas");
         AdminSQLiteOpenHelper admina = new AdminSQLiteOpenHelper(this,"Alquiladas");
         SQLiteDatabase dbc = adminc.getWritableDatabase();
         SQLiteDatabase dba = admina.getWritableDatabase();
@@ -135,16 +134,23 @@ public class Alquilar extends AppCompatActivity {
         spinner1 = (Spinner) findViewById(R.id.spinner);
         Cursor fila = dba.rawQuery("select * from Alquiladas", null);
         if (fila.moveToFirst()){ //si tiene algo en la tabla que ponga el cursor en la posicion 0
-            Cursor filaT = dbc.rawQuery("select * from cabanas where id='"+labels+"'", null);
-            if (filaT.moveToFirst()){
-                do {
-                    labels.add(filaT.getString(1)); //mientras va avanzando uno en uno agrega lo que tiene a un vector que se agrega al spinner
-                } while (filaT.moveToNext());
-            }
+            do{
+                System.out.println("Antes de pedir todo de cabañas con la id");
+                Cursor filaT = dbc.rawQuery("select * from cabanas where id="+fila.getInt(0), null);
+                if (filaT.moveToFirst()){
+                    System.out.println("filaT tiene algo y esta en posicion 0");
+                    do {
+                        System.out.println("Deberia estar agregando cosas a labels");
+                        labels.add(filaT.getString(1)); //mientras va avanzando uno en uno agrega lo que tiene a un vector que se agrega al spinner
+                    } while (filaT.moveToNext());
+                }
+            }while (fila.moveToNext());
         }else{ //Cuando no hay nada en la tabla de alquiladas que saque * lo de cabañas porque que no hay nada alquilado
+            System.out.println("No hay nada en alquilar dame todo de cabanas");
             Cursor filaT = dbc.rawQuery("select * from cabanas", null);
             if (filaT.moveToFirst()) {
                 do {
+                    System.out.println("Deberia estar agregando cosas al labels2");
                     labels.add(filaT.getString(1));
                 } while (filaT.moveToNext());
             }
@@ -154,12 +160,13 @@ public class Alquilar extends AppCompatActivity {
         dataAdapter
                 .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner1.setAdapter(dataAdapter);
+        System.out.println("Esto es labels ---->  "+labels.toString());
     }
 
 
     public void cargar(View view) {
         //Abrimos la base de datos y le pedimos las tablas.
-        AdminSQLiteOpenHelper adminc = new AdminSQLiteOpenHelper(this,"cabana");
+        AdminSQLiteOpenHelper adminc = new AdminSQLiteOpenHelper(this,"cabanas");
         AdminSQLiteOpenHelper admina = new AdminSQLiteOpenHelper(this,"Alquiladas");
         AdminSQLiteOpenHelper adminp = new AdminSQLiteOpenHelper(this,"Persona");
         SQLiteDatabase dbc = adminc.getWritableDatabase();
