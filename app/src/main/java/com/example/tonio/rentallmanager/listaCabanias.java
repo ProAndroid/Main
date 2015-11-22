@@ -26,7 +26,7 @@ public class listaCabanias extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         lv = (ListView)findViewById(R.id.listView);
-        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,target);
+        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,target);
         lv.setAdapter(adapter);
         
         pasar(this.getApplicationContext());
@@ -34,7 +34,7 @@ public class listaCabanias extends AppCompatActivity {
 
     public  void pasar (Context context){
         try {
-            AdminSQLiteOpenHelper dab = new AdminSQLiteOpenHelper(context,"cabanas");
+            AdminSQLiteOpenHelper dab = new AdminSQLiteOpenHelper(context);
             SQLiteDatabase db = dab.getReadableDatabase();
             Cursor fila = db.rawQuery("SELECT * from cabanas", null);
 

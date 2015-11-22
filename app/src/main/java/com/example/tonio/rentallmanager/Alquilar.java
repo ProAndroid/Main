@@ -73,7 +73,6 @@ public class Alquilar extends AppCompatActivity {
 
                             }
                         }
-
                         llegada.setText(ret);
 
                     }
@@ -126,78 +125,28 @@ public class Alquilar extends AppCompatActivity {
 
 
         });
-        // todo comparar fechas si la ingresada es antes o despues de la que esta alquilada la cabaña
-        AdminSQLiteOpenHelper adminc = new AdminSQLiteOpenHelper(this,"cabanas");
-        AdminSQLiteOpenHelper admina = new AdminSQLiteOpenHelper(this,"Alquiladas");
-        SQLiteDatabase dbc = adminc.getWritableDatabase();
-        SQLiteDatabase dba = admina.getWritableDatabase();
-        List<String> labels = new ArrayList<>();
-        List<Integer> ids = new ArrayList<>();
-        spinner1 = (Spinner) findViewById(R.id.spinner);
-        Cursor fila = dba.rawQuery("select * from Alquiladas", null);
-        if (fila.moveToFirst()){ //si tiene algo en la tabla que ponga el cursor en la posicion 0
-            do{
-                System.out.println("Antes de pedir todo de cabañas con la id");
-                Cursor filaT = dbc.rawQuery("select * from cabanas where idc="+fila.getInt(0), null);
-                if (filaT.moveToFirst()){
-                    System.out.println("filaT tiene algo y esta en posicion 0");
-                    do {
-                        System.out.println("Deberia estar agregando cosas a labels");
-                        labels.add(filaT.getString(1)); //mientras va avanzando uno en uno agrega lo que tiene a un vector que se agrega al spinner
-                    } while (filaT.moveToNext());
-                }
-            }while (fila.moveToNext());
-        }else{ //Cuando no hay nada en la tabla de alquiladas que saque * lo de cabañas porque que no hay nada alquilado
-            System.out.println("No hay nada en alquilar dame todo de cabanas");
-            Cursor filaT = dbc.rawQuery("select * from cabanas", null);
-            if (filaT.moveToFirst()) {
-                do {
-                    System.out.println("Deberia estar agregando cosas al labels2");
-                    labels.add(filaT.getString(1));
-                } while (filaT.moveToNext());
-            }
-        }
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, labels);
-        dataAdapter
-                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner1.setAdapter(dataAdapter);
-        System.out.println("Esto es labels ---->  " + labels.toString());
-
-        if (fila.moveToFirst()){
-            do {
-                ids.add(fila.getInt(0));
-            }while (fila.moveToNext());
-        }
-        System.out.println("Esto tiene alquiladas ---> "+ids.toString());
     }
 
 
     public void cargar(View view) {
         //Abrimos la base de datos y le pedimos las tablas.
-        AdminSQLiteOpenHelper adminc = new AdminSQLiteOpenHelper(this,"cabanas");
-        AdminSQLiteOpenHelper admina = new AdminSQLiteOpenHelper(this,"Alquiladas");
-        AdminSQLiteOpenHelper adminp = new AdminSQLiteOpenHelper(this,"Persona");
-        SQLiteDatabase dbc = adminc.getWritableDatabase();
-        SQLiteDatabase dba = admina.getWritableDatabase();
-        SQLiteDatabase dbp = adminp.getWritableDatabase();
+        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this);
+        SQLiteDatabase db = admin.getWritableDatabase();
         //Get a las variables para poder guardarlas.
         String name = nombre.getText().toString() + apellido.getText().toString() ;
         String mail = email.getText().toString();
         int dni = Integer.parseInt(etDni.getText().toString());
         String search = spinner1.getSelectedItem().toString();
-        Cursor fil = dbc.rawQuery("select idc from cabanas where name like '" + search + "'", null);
+        Cursor fil = db.rawQuery("select idc from cabanas where name like '" + search + "'", null);
         fil.moveToFirst();
         String id = fil.getString(0);
         int aux_id = Integer.parseInt(id);
 
-
-
-        // todo me dice que no tengo la columna
         ContentValues toAlquilada = new ContentValues();
-        toAlquilada.put("id", aux_id);
+        toAlquilada.put("idc", aux_id);
         toAlquilada.put("checkin", llegada.getText().toString());
         toAlquilada.put("checkout", salida.getText().toString());
+        db.insert("Alquiladas", null, toAlquilada);
 
         System.out.println("Esto tiene toAlquilada --->  " + toAlquilada.toString());
 
@@ -206,21 +155,50 @@ public class Alquilar extends AppCompatActivity {
         toPersona.put("dni", dni);
         toPersona.put("nombre", name);
         toPersona.put("email", mail);
-        dbp.insert("Persona", null, toPersona);
+        db.insert("Persona", null, toPersona);
         System.out.println("Esto tiene toPersona ---> " + toPersona.toString());
 
-        dba.insert("Alquiladas", null, toAlquilada);
-
-        dba.close();
-        dbc.close();
-        dbp.close();
+        db.close();
         nombre.setText("");
         apellido.setText("");
         email.setText("");
         etDni.setText("");
+        llegada.setText("");
+        salida.setText("");
         Toast.makeText(this, "Guardado correctamente", Toast.LENGTH_LONG).show();
         System.out.println(toPersona.toString());
         System.out.println(toAlquilada.toString());
+        actualizarSpinner();
     }
+
+    public void actualizarSpinner() {
+
+        // todo comparar fechas si la ingresada es antes o despues de la que esta alquilada la cabaña
+        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this);
+        SQLiteDatabase db = admin.getWritableDatabase();
+        List<String> labels = new ArrayList<>();
+        List<Integer> ids = new ArrayList<>();
+        spinner1 = (Spinner) findViewById(R.id.spinner);
+        Cursor idc = db.rawQuery("SELECT idc FROM Alquiladas", null);
+        idc.moveToFirst();
+        System.out.println("Esto es el Cursor idc ---> "+idc.getColumnIndex("idc"));
+
+        //FIXME: funciona todo bien en terminal. Pero aca me tira CursorIndex Out Of Bounds Exception.
+        Cursor fila = db.rawQuery("SELECT * FROM cabanas WHERE idc NOT IN (SELECT idc FROM Alquiladas)", null);
+        if (fila.moveToFirst()) {
+            do {
+                labels.add(fila.getString(0));
+            } while (fila.moveToNext());
+        }
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, labels);
+        dataAdapter
+                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner1.setAdapter(dataAdapter);
+        System.out.println("Esto es labels ---->  " + labels.toString());
+        System.out.println("Esto es ids ----> " + ids.toString());
+    }
+
 }
 

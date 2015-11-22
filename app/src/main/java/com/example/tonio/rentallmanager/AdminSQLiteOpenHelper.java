@@ -13,11 +13,10 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
     //public AdminSQLiteOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
     //  super(context, name, factory, version);
     private static final int DATABASE_VERSION = 1;
-    public AdminSQLiteOpenHelper(Context context, String name) {
-        super(context, name, null, DATABASE_VERSION);
+    private static final String NAME = "cabanas.db";
+    public AdminSQLiteOpenHelper(Context context) {
+        super(context, NAME, null, DATABASE_VERSION);
     }
-
-
 
     @Override
     public void onCreate(SQLiteDatabase db) {
