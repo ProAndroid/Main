@@ -172,8 +172,6 @@ public class Alquilar extends AppCompatActivity {
     }
 
     public void actualizarSpinner() {
-
-        // todo comparar fechas si la ingresada es antes o despues de la que esta alquilada la cabaña
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this);
         SQLiteDatabase db = admin.getWritableDatabase();
         List<String> labels = new ArrayList<>();

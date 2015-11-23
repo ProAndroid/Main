@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class listaCabanias extends AppCompatActivity {
     ListView lv;
-    ArrayList<String> target = new ArrayList<String>();
+    ArrayList<String> target = new ArrayList<>();
     ArrayAdapter <String> adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +28,17 @@ public class listaCabanias extends AppCompatActivity {
         lv = (ListView)findViewById(R.id.listView);
         adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,target);
         lv.setAdapter(adapter);
-        
-        pasar(this.getApplicationContext());
+        pasar();
     }
 
-    public  void pasar (Context context){
+    public  void pasar (){
         try {
-            AdminSQLiteOpenHelper dab = new AdminSQLiteOpenHelper(context);
-            SQLiteDatabase db = dab.getReadableDatabase();
+            System.out.println("Entre al try");
+            //FIXME: no hace nada
+            AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this);
+            SQLiteDatabase db = admin.getReadableDatabase();
             Cursor fila = db.rawQuery("SELECT * FROM cabanas WHERE idc IN (SELECT idc FROM Alquiladas)", null);
+            System.out.println("Estoy justo antes del if");
             if (fila.moveToFirst()){
                 do {
                     String linea = fila.getString(1) + " (Alquilada)";
@@ -52,10 +54,10 @@ public class listaCabanias extends AppCompatActivity {
                 }while (filaC.moveToNext());
                 adapter.notifyDataSetChanged();
             }
-            adapter.notifyDataSetChanged();
         }catch (Exception e){
-            Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
-            System.out.println(e);
+            Toast.makeText( this, e.toString(), Toast.LENGTH_LONG).show();
+            System.out.println(e.toString());
         }
 
-}}
+    }
+}
