@@ -119,11 +119,9 @@ public class Alquilar extends AppCompatActivity {
 
                     }
                 }, calendarS.get(Calendar.YEAR), calendarS.get(Calendar.MONTH), calendarS.get(Calendar.DAY_OF_MONTH));
-
                 sale.show();
+                actualizarSpinner();
             }
-
-
         });
     }
 
@@ -137,7 +135,8 @@ public class Alquilar extends AppCompatActivity {
         String mail = email.getText().toString();
         int dni = Integer.parseInt(etDni.getText().toString());
         String search = spinner1.getSelectedItem().toString();
-        Cursor fil = db.rawQuery("select idc from cabanas where name like '" + search + "'", null);
+        System.out.println(search);
+        Cursor fil = db.rawQuery("select idc from cabanas where name='" + search + "'", null);
         fil.moveToFirst();
         String id = fil.getString(0);
         int aux_id = Integer.parseInt(id);
@@ -175,27 +174,18 @@ public class Alquilar extends AppCompatActivity {
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this);
         SQLiteDatabase db = admin.getWritableDatabase();
         List<String> labels = new ArrayList<>();
-        List<Integer> ids = new ArrayList<>();
         spinner1 = (Spinner) findViewById(R.id.spinner);
-        Cursor idc = db.rawQuery("SELECT idc FROM Alquiladas", null);
-        idc.moveToFirst();
-        System.out.println("Esto es el Cursor idc ---> "+idc.getColumnIndex("idc"));
-
-        //FIXME: funciona todo bien en terminal. Pero aca me tira CursorIndex Out Of Bounds Exception.
-        Cursor fila = db.rawQuery("SELECT * FROM cabanas WHERE idc NOT IN (SELECT idc FROM Alquiladas)", null);
+        Cursor fila = db.rawQuery("SELECT name FROM cabanas WHERE idc NOT IN (SELECT idc FROM Alquiladas)", null);
         if (fila.moveToFirst()) {
             do {
                 labels.add(fila.getString(0));
             } while (fila.moveToNext());
         }
-
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, labels);
         dataAdapter
                 .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner1.setAdapter(dataAdapter);
-        System.out.println("Esto es labels ---->  " + labels.toString());
-        System.out.println("Esto es ids ----> " + ids.toString());
     }
 
 }

@@ -33,8 +33,6 @@ public class listaCabanias extends AppCompatActivity {
 
     public  void pasar (){
         try {
-            System.out.println("Entre al try");
-            //FIXME: no hace nada
             AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this);
             SQLiteDatabase db = admin.getReadableDatabase();
             Cursor fila = db.rawQuery("SELECT * FROM cabanas WHERE idc IN (SELECT idc FROM Alquiladas)", null);
