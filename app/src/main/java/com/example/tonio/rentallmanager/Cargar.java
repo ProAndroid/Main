@@ -24,7 +24,7 @@ public class Cargar extends AppCompatActivity {
 
     public void cargar(View view){
         if(!(editText.getText().toString().matches(""))){
-            AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,"cabanas");
+            AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this);
             SQLiteDatabase db = admin.getWritableDatabase();
             ContentValues guardar = new ContentValues();
             String nom = editText.getText().toString();

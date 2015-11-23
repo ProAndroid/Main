@@ -36,22 +36,23 @@ public class listaCabanias extends AppCompatActivity {
         try {
             AdminSQLiteOpenHelper dab = new AdminSQLiteOpenHelper(context);
             SQLiteDatabase db = dab.getReadableDatabase();
-            Cursor fila = db.rawQuery("SELECT * from cabanas", null);
-
-            int i = 0;
-
-
+            Cursor fila = db.rawQuery("SELECT * FROM cabanas WHERE idc IN (SELECT idc FROM Alquiladas)", null);
             if (fila.moveToFirst()){
                 do {
-                    String linea = fila.getString(1);
+                    String linea = fila.getString(1) + " (Alquilada)";
                     adapter.add(linea);
-                }while (fila.moveToNext());{
-                }
-
+                }while (fila.moveToNext());
                 adapter.notifyDataSetChanged();
-
             }
-
+            Cursor filaC = db.rawQuery("SELECT name FROM cabanas WHERE idc NOT IN (SELECT idc FROM Alquiladas)", null);
+            if (filaC.moveToFirst()){
+                do {
+                    String linea = filaC.getString(0);
+                    adapter.add(linea);
+                }while (filaC.moveToNext());
+                adapter.notifyDataSetChanged();
+            }
+            adapter.notifyDataSetChanged();
         }catch (Exception e){
             Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
             System.out.println(e);
