@@ -30,8 +30,10 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
                 +"("
                 + Alquiladas.KEY_ID + " integer primary key autoincrement,"
                 + Cabana.KEY_ID + " int,"
-                + Alquiladas.KEY_checkin + " text,"
-                + Alquiladas.KEY_checkout + " text"
+                + Alquiladas.KEY_checkinDia + " int,"
+                + Alquiladas.KEY_checkinMes + " int,"
+                +Alquiladas.KEY_checkoutDia + " int,"
+                + Alquiladas.KEY_checkoutMes + " text"
                 +")";
         db.execSQL(CREATE_TABLE_ALQUILADAS);
 

@@ -116,11 +116,10 @@ public class Alquilar extends AppCompatActivity {
                             }
                         }
                         salida.setText(ret);
-
+                        actualizarSpinner();
                     }
                 }, calendarS.get(Calendar.YEAR), calendarS.get(Calendar.MONTH), calendarS.get(Calendar.DAY_OF_MONTH));
                 sale.show();
-                actualizarSpinner();
             }
         });
     }
@@ -143,8 +142,14 @@ public class Alquilar extends AppCompatActivity {
 
         ContentValues toAlquilada = new ContentValues();
         toAlquilada.put("idc", aux_id);
-        toAlquilada.put("checkin", llegada.getText().toString());
-        toAlquilada.put("checkout", salida.getText().toString());
+        String toSplit = llegada.getText().toString();
+        String[] parts = toSplit.split("/");
+        toAlquilada.put("checkind",Integer.parseInt(parts[0]));
+        toAlquilada.put("checkinm",Integer.parseInt(parts[1]));
+        String toSplits = salida.getText().toString();
+        String[] partss = toSplits.split("/");
+        toAlquilada.put("checkoutd", Integer.parseInt(partss[0]));
+        toAlquilada.put("checkoutm", Integer.parseInt(partss[1]));
         db.insert("Alquiladas", null, toAlquilada);
 
         System.out.println("Esto tiene toAlquilada --->  " + toAlquilada.toString());
@@ -175,7 +180,11 @@ public class Alquilar extends AppCompatActivity {
         SQLiteDatabase db = admin.getWritableDatabase();
         List<String> labels = new ArrayList<>();
         spinner1 = (Spinner) findViewById(R.id.spinner);
-        Cursor fila = db.rawQuery("SELECT name FROM cabanas WHERE idc NOT IN (SELECT idc FROM Alquiladas)", null);
+        String toSplit1 = llegada.getText().toString();
+        String[] parts1 = toSplit1.split("/");
+        String toSplit = salida.getText().toString();
+        String [] parts = toSplit.split("/");
+        Cursor fila = db.rawQuery("SELECT name FROM cabanas WHERE idc NOT IN (SELECT idc FROM Alquiladas WHERE checkind BETWEEN '"+ parts[0]+"'"+ " AND '"+parts1[0]+"'"+" AND "+ "checkoutd"  ,null);
         if (fila.moveToFirst()) {
             do {
                 labels.add(fila.getString(0));

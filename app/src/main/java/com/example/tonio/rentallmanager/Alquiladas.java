@@ -6,9 +6,10 @@ package com.example.tonio.rentallmanager;
 public class Alquiladas {
     public final static String TABLE = "Alquiladas";
     public static final String KEY_ID = "id";
-    public static final String KEY_checkin = "checkin";
-    public static final String KEY_checkout = "checkout";
-
+    public static final String KEY_checkinDia = "checkind";
+    public static final String KEY_checkinMes = "checkinm";
+    public static final String KEY_checkoutDia = "checkoutd";
+    public static final String KEY_checkoutMes = "checkoutm";
     public int cabaña_ID;
     public String checkin;
     public String checkout;
