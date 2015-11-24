@@ -195,6 +195,8 @@ public class Alquilar extends AppCompatActivity {
         dataAdapter
                 .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner1.setAdapter(dataAdapter);
+        fila.close();
+        db.close();
     }
 
 }
