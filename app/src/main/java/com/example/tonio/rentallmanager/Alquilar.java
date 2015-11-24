@@ -184,7 +184,7 @@ public class Alquilar extends AppCompatActivity {
         String[] parts1 = toSplit1.split("/");
         String toSplit = salida.getText().toString();
         String [] parts = toSplit.split("/");
-        Cursor fila = db.rawQuery("SELECT name FROM cabanas WHERE idc NOT IN (SELECT idc FROM Alquiladas WHERE checkind BETWEEN '"+ parts[0]+"'"+ " AND '"+parts1[0]+"'"+" AND "+ "checkoutd"  ,null);
+        Cursor fila = db.rawQuery("SELECT name FROM cabanas WHERE idc NOT IN (SELECT idc FROM Alquiladas WHERE checkind BETWEEN '"+ parts[0]+"'"+ " AND '"+parts1[0]+"'"+" AND "+ "checkinm BETWEEN '"+  parts[1] +"'"+" AND '"+parts1[1]+"'"+")",null);
         if (fila.moveToFirst()) {
             do {
                 labels.add(fila.getString(0));
