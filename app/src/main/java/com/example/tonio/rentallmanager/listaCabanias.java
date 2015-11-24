@@ -31,20 +31,17 @@ public class listaCabanias extends AppCompatActivity {
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, target);
         lv.setAdapter(adapter);
         pasar();
-        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(listaCabanias.this, Editar.class);
-                i.putExtra("nombre", lv.getSelectedItem().toString());
-                startActivity(i);
-                return true;
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                abrirEditar();
             }
         });
     }
     public  void pasar (){
         try {
             AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this);
-            SQLiteDatabase db = admin.getReadableDatabase();
+            SQLiteDatabase db = admin.getWritableDatabase();
             Cursor fila = db.rawQuery("SELECT * FROM cabanas WHERE idc IN (SELECT idc FROM Alquiladas)", null);
             System.out.println("Estoy justo antes del if");
             if (fila.moveToFirst()){
@@ -68,5 +65,13 @@ public class listaCabanias extends AppCompatActivity {
         }
 
     }
+    public void abrirEditar(){
+        Toast.makeText(this,"En desarrollo :)",Toast.LENGTH_LONG).show();
 
+    /*
+        Intent i = new Intent(listaCabanias.this, Editar.class);
+        i.putExtra("nombre", lv.getSelectedItem().toString());
+        startActivity(i);
+    */
+    }
 }

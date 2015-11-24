@@ -32,6 +32,7 @@ public class Menu_Activity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        actualizarcabanas();
     }
     public void lanzar(View view) {
         Intent i = new Intent(this, listaCabanias.class );
