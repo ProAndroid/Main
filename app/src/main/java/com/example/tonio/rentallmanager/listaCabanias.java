@@ -1,6 +1,7 @@
 package com.example.tonio.rentallmanager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -25,12 +27,20 @@ public class listaCabanias extends AppCompatActivity {
         setContentView(R.layout.activity_lista_cabanias);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        lv = (ListView)findViewById(R.id.listView);
-        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,target);
+        lv = (ListView) findViewById(R.id.listView);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, target);
         lv.setAdapter(adapter);
         pasar();
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(listaCabanias.this, Editar.class);
+                i.putExtra("nombre", lv.getSelectedItem().toString());
+                startActivity(i);
+                return true;
+            }
+        });
     }
-
     public  void pasar (){
         try {
             AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this);
@@ -58,4 +68,5 @@ public class listaCabanias extends AppCompatActivity {
         }
 
     }
+
 }

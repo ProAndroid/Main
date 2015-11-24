@@ -6,7 +6,7 @@ package com.example.tonio.rentallmanager;
 public class Persona {
 
     public final static String TABLE = "Persona";
-    public static final String KEY_ID = "id";
+    public static final String KEY_ID = "idc";
     public static final String KEY_nombre= "nombre";
     public static final String kEY_dni= "dni";
     public static final String KEY_email="email ";

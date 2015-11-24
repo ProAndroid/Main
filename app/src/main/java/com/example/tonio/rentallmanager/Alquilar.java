@@ -130,7 +130,7 @@ public class Alquilar extends AppCompatActivity {
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this);
         SQLiteDatabase db = admin.getWritableDatabase();
         //Get a las variables para poder guardarlas.
-        String name = nombre.getText().toString() + apellido.getText().toString() ;
+        String name = nombre.getText().toString() +"/"+ apellido.getText().toString() ;
         String mail = email.getText().toString();
         int dni = Integer.parseInt(etDni.getText().toString());
         String search = spinner1.getSelectedItem().toString();
@@ -155,7 +155,7 @@ public class Alquilar extends AppCompatActivity {
         System.out.println("Esto tiene toAlquilada --->  " + toAlquilada.toString());
 
         ContentValues toPersona = new ContentValues();
-        toPersona.put("id", aux_id);
+        toPersona.put("idc", aux_id);
         toPersona.put("dni", dni);
         toPersona.put("nombre", name);
         toPersona.put("email", mail);

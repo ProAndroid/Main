@@ -33,6 +33,11 @@
             android:label="@string/title_activity_lista_cabanias"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <activity
+            android:name=".Editar"
+            android:label="@string/title_activity_editar"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>

@@ -93,4 +93,5 @@
     <string name="title_activity_cab_">Cab_Activity</string>
     <string name="title_activity_alquilar">Alquilar</string>
     <string name="title_activity_lista_cabanias">listaCabanias</string>
+    <string name="title_activity_editar">Editar</string>
 </resources>
